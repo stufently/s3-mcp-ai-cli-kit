@@ -4,7 +4,7 @@ on:
     inputs:
       kit-ref:
         type: string
-        default: v0.1.0
+        default: v0.1.1
 permissions:
   contents: read
 jobs:

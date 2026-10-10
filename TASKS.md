@@ -9,7 +9,10 @@
 - Завершено: опубликован Go-модуль v0.1.0 (коммит b8970d4); тег не является релизом провайдеров.
 - Завершено: Selectel переведён на опубликованный модуль; все проверки провайдера зелёные, push 1663c0f.
 - Продолжение rollout ведётся в TASKS.md соответствующего провайдера; первым идёт Yandex Cloud.
-- Далее: Yandex → VK Cloud → Cloud.ru → Timeweb → MWS → Beget, затем очистка публичных документов Selectel.
+- Завершено: Yandex, VK Cloud, Cloud.ru, Timeweb Cloud и MWS опубликованы после всех проверок; статусы — в их TASKS.md.
+- Завершено: patch v0.1.1 для console-only bucket API: независимые bucket_create/bucket_delete/bucket_config, прежние профили совместимы; 32768 сочетаний регистрации.
+- Проверки patch завершены в Docker: build/vet/race/lint, versitygw, MCP smoke, 95/95 мутаций, signal/hash self-tests, actionlint.
+- Далее: публикация v0.1.1, завершение Beget и очистка публичных документов Selectel.
 
 ## Живые проверки
 

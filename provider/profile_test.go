@@ -23,3 +23,18 @@ func TestLoadProfile(t *testing.T) {
 		})
 	}
 }
+
+func TestFeatureDefaults(t *testing.T) {
+	for _, name := range []string{"bucket_create", "bucket_delete", "bucket_config", "versioning", "cors", "multipart", "presign", "conditional_writes", "conditional_delete", "unknown"} {
+		for _, state := range []string{"missing", "false", "true"} {
+			p := Profile{Features: map[string]bool{}}
+			if state != "missing" {
+				p.Features[name] = state == "true"
+			}
+			want := state == "true" || state == "missing" && (name == "bucket_create" || name == "bucket_delete" || name == "bucket_config")
+			if got := p.Supports(name); got != want {
+				t.Fatalf("FEATURE_DEFAULT: feature=%s state=%s got=%t want=%t", name, state, got, want)
+			}
+		}
+	}
+}

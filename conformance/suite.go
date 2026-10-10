@@ -66,12 +66,25 @@ func call(t *testing.T, ctx context.Context, c *s3core.Client, name string, a s3
 	}
 	return out.(map[string]any)
 }
+
+// provisionBucket creates only a unique emulator fixture, outside the tested
+// provider client. Console-only providers still exercise their actual guards.
+func provisionBucket(t *testing.T, ctx context.Context, c *s3core.Client, bucket string) {
+	t.Helper()
+	if c.Profile.Supports("bucket_create") {
+		call(t, ctx, c, "s3_create_bucket", s3core.Args{Bucket: bucket})
+		return
+	}
+	if _, err := c.SDK.CreateBucket(ctx, &s3.CreateBucketInput{Bucket: aws.String(bucket)}); err != nil {
+		t.Fatalf("emulator fixture: %v", err)
+	}
+}
 func bucketName(prefix string) string { return fmt.Sprintf("%s-%d", prefix, time.Now().UnixNano()) }
 func RunS3(t *testing.T, p provider.Profile) {
 	ctx, c := setup(t, p)
 	var e error
 	bucket := bucketName("contract")
-	call(t, ctx, c, "s3_create_bucket", s3core.Args{Bucket: bucket})
+	provisionBucket(t, ctx, c, bucket)
 	// Cleanup only the unique test bucket. Each API failure remains visible.
 	t.Cleanup(func() {
 		out, e := c.SDK.ListObjectVersions(context.Background(), &s3.ListObjectVersionsInput{Bucket: aws.String(bucket)})
@@ -204,9 +217,11 @@ func RunS3(t *testing.T, p provider.Profile) {
 	if c.Profile.Features["bucket_policy"] {
 		call(t, ctx, c, "s3_put_bucket_policy", s3core.Args{Bucket: bucket, Policy: policy})
 	}
-	cfg := call(t, ctx, c, "s3_get_bucket_config", s3core.Args{Bucket: bucket})
-	if cfg["cors"] == nil || cfg["bucket_policy"] == nil {
-		t.Fatal("bucket config")
+	if p.Supports("bucket_config") {
+		cfg := call(t, ctx, c, "s3_get_bucket_config", s3core.Args{Bucket: bucket})
+		if cfg["cors"] == nil || cfg["bucket_policy"] == nil {
+			t.Fatal("bucket config")
+		}
 	}
 	if c.Profile.Features["bucket_policy"] {
 		call(t, ctx, c, "s3_delete_bucket_policy", s3core.Args{Bucket: bucket})
@@ -222,7 +237,7 @@ func RunS3(t *testing.T, p provider.Profile) {
 		call(t, ctx, c, "s3_delete_object", s3core.Args{Bucket: bucket, Key: "versioned", VersionID: *v1["version_id"].(*string)})
 	}
 
-	if c.Profile.Features["object_lock_config"] {
+	if c.Profile.Features["object_lock_config"] && p.Supports("bucket_create") && p.Supports("bucket_delete") && p.Supports("bucket_config") {
 		lockBucket := bucketName("locked")
 		call(t, ctx, c, "s3_create_bucket", s3core.Args{Bucket: lockBucket, ObjectLock: true})
 		lock := call(t, ctx, c, "s3_get_bucket_config", s3core.Args{Bucket: lockBucket})
@@ -233,8 +248,22 @@ func RunS3(t *testing.T, p provider.Profile) {
 	}
 
 	empty := bucketName("empty")
-	call(t, ctx, c, "s3_create_bucket", s3core.Args{Bucket: empty})
-	call(t, ctx, c, "s3_delete_bucket", s3core.Args{Bucket: empty})
+	provisionBucket(t, ctx, c, empty)
+	if p.Supports("bucket_delete") {
+		call(t, ctx, c, "s3_delete_bucket", s3core.Args{Bucket: empty})
+	} else {
+		if _, err := c.SDK.DeleteBucket(ctx, &s3.DeleteBucketInput{Bucket: aws.String(empty)}); err != nil {
+			t.Fatal(err)
+		}
+	}
+	for _, op := range []struct{ name, feature string }{{"s3_create_bucket", "bucket_create"}, {"s3_delete_bucket", "bucket_delete"}, {"s3_get_bucket_config", "bucket_config"}} {
+		if !p.Supports(op.feature) {
+			_, err := c.Execute(ctx, op.name, s3core.Args{Bucket: empty, Confirm: true}, nil)
+			if err == nil || !strings.Contains(err.Error(), op.feature+" unsupported") {
+				t.Fatalf("unsupported bucket operation %s: %v", op.name, err)
+			}
+		}
+	}
 }
 func signedHTTP(t *testing.T, ctx context.Context, method, url string, data []byte, headers http.Header) []byte {
 	t.Helper()
@@ -262,7 +291,7 @@ func signedHTTP(t *testing.T, ctx context.Context, method, url string, data []by
 func RunMCP(t *testing.T, p provider.Profile) {
 	ctx, c := setup(t, p)
 	bucket := bucketName("mcp")
-	call(t, ctx, c, "s3_create_bucket", s3core.Args{Bucket: bucket})
+	provisionBucket(t, ctx, c, bucket)
 	call(t, ctx, c, "s3_put_object", s3core.Args{Bucket: bucket, Key: "backups/file", Data: "protected"})
 	t.Cleanup(func() {
 		_, _ = c.SDK.DeleteObject(context.Background(), &s3.DeleteObjectInput{Bucket: aws.String(bucket), Key: aws.String("backups/file")})
@@ -305,9 +334,9 @@ func RunMCP(t *testing.T, p provider.Profile) {
 	if len(tools.Tools) != len(mcpserver.Tools(c.Profile, cfg)) {
 		t.Fatalf("file root tool count: %d", len(tools.Tools))
 	}
-	capabilities := map[string]string{"s3_upload_file": "multipart", "s3_multipart_create": "multipart", "s3_multipart_complete": "multipart", "s3_multipart_abort": "multipart", "s3_presign_get": "presign", "s3_presign_put": "presign", "s3_move_object": "conditional_delete", "s3_get_object_tagging": "object_tagging", "s3_put_object_tagging": "object_tagging", "s3_list_object_versions": "versioning", "s3_put_bucket_versioning": "versioning", "s3_put_bucket_cors": "cors", "s3_put_bucket_policy": "bucket_policy", "s3_delete_bucket_policy": "bucket_policy", "s3_put_object_lock_configuration": "object_lock_config"}
+	capabilities := map[string]string{"s3_get_bucket_config": "bucket_config", "s3_create_bucket": "bucket_create", "s3_delete_bucket": "bucket_delete", "s3_upload_file": "multipart", "s3_multipart_create": "multipart", "s3_multipart_complete": "multipart", "s3_multipart_abort": "multipart", "s3_presign_get": "presign", "s3_presign_put": "presign", "s3_move_object": "conditional_delete", "s3_get_object_tagging": "object_tagging", "s3_put_object_tagging": "object_tagging", "s3_list_object_versions": "versioning", "s3_put_bucket_versioning": "versioning", "s3_put_bucket_cors": "cors", "s3_put_bucket_policy": "bucket_policy", "s3_delete_bucket_policy": "bucket_policy", "s3_put_object_lock_configuration": "object_lock_config"}
 	for _, tool := range tools.Tools {
-		if cap := capabilities[tool.Name]; cap != "" && !p.Features[cap] {
+		if cap := capabilities[tool.Name]; cap != "" && !p.Supports(cap) {
 			t.Fatalf("disabled capability %s registered tool %s", cap, tool.Name)
 		}
 		if tool.Name == "s3_multipart_presign_part" && (!p.Features["multipart"] || !p.Features["presign"]) {
@@ -421,7 +450,14 @@ func RunCLI(t *testing.T, p provider.Profile) {
 		}
 		return data
 	}
-	run(0, "mb", bucket)
+	if p.Supports("bucket_create") {
+		run(0, "mb", bucket)
+	} else {
+		if out := run(1, "mb", bucket); !strings.Contains(string(out), "bucket_create unsupported") {
+			t.Fatalf("CLI mb refusal: %s", out)
+		}
+		provisionBucket(t, ctx, c, bucket)
+	}
 	source := filepath.Join(t.TempDir(), "large")
 	size := 20 * 1024 * 1024
 	if !p.Features["multipart"] {
@@ -452,5 +488,14 @@ func RunCLI(t *testing.T, p provider.Profile) {
 
 	run(2, "rm", "s3://"+bucket+"/large")
 	run(0, "rm", "--yes", "s3://"+bucket+"/large")
-	run(0, "rb", "--yes", bucket)
+	if p.Supports("bucket_delete") {
+		run(0, "rb", "--yes", bucket)
+	} else {
+		if out := run(1, "rb", "--yes", bucket); !strings.Contains(string(out), "bucket_delete unsupported") {
+			t.Fatalf("CLI rb refusal: %s", out)
+		}
+		if _, err := c.SDK.DeleteBucket(ctx, &s3.DeleteBucketInput{Bucket: aws.String(bucket)}); err != nil {
+			t.Fatal(err)
+		}
+	}
 }

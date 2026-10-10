@@ -1,5 +1,12 @@
 # Changelog
 
+## 0.1.1
+
+- Disable bucket creation, deletion and configuration tools independently for console-only providers, including direct CLI/core calls before network access.
+- Keep existing profiles compatible when the new bucket capabilities are omitted.
+- Expand registration coverage to 32768 capability/permission/file-root combinations and add eight protective mutations (95 total).
+- Provision emulator fixtures separately from console-only provider operations.
+
 ## 0.1.0
 
 - Extract the shared S3 MCP server, tool registry, streaming CLI and atomic client/skill installers.

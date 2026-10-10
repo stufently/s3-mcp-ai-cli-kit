@@ -22,7 +22,7 @@ var registry = []ToolSpec{
 	{Name: "s3_list_object_versions", Capability: "versioning", Fields: "bucket prefix max_keys continuation_token version_marker", Required: "bucket", Description: "List versions and delete markers with both pagination markers."},
 	{Name: "s3_list_multipart_uploads", Capability: "multipart", Fields: "bucket prefix max_keys continuation_token upload_id", Required: "bucket", Description: "List unfinished uploads; pass both returned markers."},
 	{Name: "s3_list_parts", Capability: "multipart", Fields: "bucket key upload_id max_keys continuation_token", Required: "bucket key upload_id", Description: "List multipart parts."},
-	{Name: "s3_get_bucket_config", Fields: "bucket", Required: "bucket", Description: "Read location, versioning, CORS, policy and Object Lock; report absent/unsupported configuration."},
+	{Name: "s3_get_bucket_config", Capability: "bucket_config", Fields: "bucket", Required: "bucket", Description: "Read location, versioning, CORS, policy and Object Lock; report absent/unsupported configuration."},
 	{Name: "s3_largest_objects", Fields: "bucket prefix max_scan limit continuation_token", Required: "bucket", Description: "Bounded largest objects scan, default max_scan 10000; partial results carry continuation token."},
 	{Name: "s3_prefix_usage", Fields: "bucket prefix max_scan continuation_token result_offset", Required: "bucket", Description: "Bounded usage by first-level prefixes; paginate aggregate rows with next_result_offset."},
 	{Name: "s3_unfinished_uploads", Capability: "multipart", Fields: "bucket prefix max_scan older_than_hours continuation_token upload_id", Required: "bucket", Description: "Find uploads older than N hours (default 24), bounded by max_scan."},
@@ -41,8 +41,8 @@ var registry = []ToolSpec{
 	{Name: "s3_delete_objects", Levels: "delete", Fields: "bucket objects confirm", Required: "bucket objects", Description: "Delete 1..1000 scoped objects; approval required."},
 	{Name: "s3_move_object", Levels: "write delete", Capability: "conditional_delete", Fields: "bucket key source_bucket source_key overwrite confirm", Required: "bucket key source_bucket source_key", Description: "Copy then delete source after successful copy; destructive approval required."},
 	{Name: "s3_multipart_abort", Levels: "delete", Capability: "multipart", Fields: "bucket key upload_id confirm", Required: "bucket key upload_id", Description: "Abort incomplete upload; destructive approval required."},
-	{Name: "s3_create_bucket", Levels: "admin", Fields: "bucket object_lock", Required: "bucket", Description: "Create bucket. Storage class is chosen in provider panel, not through this tool."},
-	{Name: "s3_delete_bucket", Levels: "admin delete", Fields: "bucket confirm", Required: "bucket", Description: "Delete empty bucket only; approval required."},
+	{Name: "s3_create_bucket", Levels: "admin", Capability: "bucket_create", Fields: "bucket object_lock", Required: "bucket", Description: "Create bucket. Storage class is chosen in provider panel, not through this tool."},
+	{Name: "s3_delete_bucket", Levels: "admin delete", Capability: "bucket_delete", Fields: "bucket confirm", Required: "bucket", Description: "Delete empty bucket only; approval required."},
 	{Name: "s3_put_bucket_versioning", Levels: "admin", Capability: "versioning", Fields: "bucket status confirm", Required: "bucket status", Description: "Set Enabled or Suspended; suspension requires destructive approval."},
 	{Name: "s3_put_bucket_cors", Levels: "admin", Capability: "cors", Fields: "bucket cors_rules", Required: "bucket cors_rules", Description: "Set bucket CORS rules."},
 	{Name: "s3_put_bucket_policy", Levels: "admin", Capability: "bucket_policy", Fields: "bucket policy confirm", Required: "bucket policy", Description: "Set policy JSON; destructive approval required."},
@@ -57,7 +57,7 @@ func enabled(spec ToolSpec, p provider.Profile, c config.Config) bool {
 		}
 	}
 	for _, capability := range strings.Fields(spec.Capability) {
-		if !p.Features[capability] {
+		if !p.Supports(capability) {
 			return false
 		}
 	}

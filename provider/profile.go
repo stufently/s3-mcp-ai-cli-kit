@@ -53,3 +53,12 @@ func Load(b []byte) (Profile, error) {
 	}
 	return p, nil
 }
+
+// Supports keeps bucket creation/deletion/configuration enabled for pre-capability profiles.
+// All other absent capabilities remain disabled.
+func (p Profile) Supports(name string) bool {
+	if enabled, present := p.Features[name]; present {
+		return enabled
+	}
+	return name == "bucket_create" || name == "bucket_delete" || name == "bucket_config"
+}

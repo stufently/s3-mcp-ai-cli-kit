@@ -3,6 +3,7 @@ package s3core
 import (
 	"bytes"
 	"context"
+	"fmt"
 	"net/http"
 	"strings"
 	"sync/atomic"
@@ -39,5 +40,25 @@ func TestUnsupportedConditionalDeleteRefusal(t *testing.T) {
 				t.Fatalf("PROFILE_MOVE: requests=%d err=%v", requests.Load(), err)
 			}
 		})
+	}
+}
+
+func TestUnsupportedBucketOperations(t *testing.T) {
+	for _, op := range []struct{ name, feature string }{
+		{"s3_create_bucket", "bucket_create"}, {"s3_delete_bucket", "bucket_delete"}, {"s3_get_bucket_config", "bucket_config"},
+	} {
+		for mask := 0; mask < 8; mask++ {
+			t.Run(fmt.Sprintf("%s/%d", op.name, mask), func(t *testing.T) {
+				var requests atomic.Int32
+				c := testClient(t, func(w http.ResponseWriter, _ *http.Request) { requests.Add(1); w.WriteHeader(http.StatusBadRequest) }, "allow")
+				c.Config.Allow = map[string]bool{"write": mask&1 != 0, "delete": mask&2 != 0, "admin": mask&4 != 0}
+				c.Profile.Features[op.feature] = false
+				_, err := c.Execute(context.Background(), op.name, Args{Bucket: "bucket", Confirm: true}, nil)
+				reason := op.feature + " unsupported"
+				if err == nil || !strings.Contains(err.Error(), reason) || requests.Load() != 0 {
+					t.Fatalf("PROFILE_BUCKET: tool=%s levels=%d requests=%d expected=%q err=%v", op.name, mask, requests.Load(), reason, err)
+				}
+			})
+		}
 	}
 }

@@ -119,6 +119,17 @@ func listing(name string) bool {
 	return false
 }
 func (c *Client) Guard(ctx context.Context, name string, a Args, ask safety.Elicitor) error {
+	if name == "s3_get_bucket_config" && !c.Profile.Supports("bucket_config") {
+		return fmt.Errorf("bucket_config unsupported; bucket configuration disabled")
+	}
+
+	if name == "s3_create_bucket" && !c.Profile.Supports("bucket_create") {
+		return fmt.Errorf("bucket_create unsupported; create bucket disabled")
+	}
+	if name == "s3_delete_bucket" && !c.Profile.Supports("bucket_delete") {
+		return fmt.Errorf("bucket_delete unsupported; delete bucket disabled")
+	}
+
 	if name == "s3_move_object" && !c.Profile.Features["conditional_delete"] {
 		return fmt.Errorf("conditional delete unsupported; move disabled")
 	}

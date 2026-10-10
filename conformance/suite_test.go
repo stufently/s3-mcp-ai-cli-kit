@@ -35,10 +35,14 @@ func TestDisabledCapabilities(t *testing.T) {
 	if e != nil {
 		t.Fatal(e)
 	}
+	p.Features["bucket_create"] = false
+	p.Features["bucket_delete"] = false
+	p.Features["bucket_config"] = false
 	for feature := range p.Features {
 		p.Features[feature] = false
 	}
 	t.Run("S3", func(t *testing.T) { RunS3(t, p) })
 	t.Run("MCP", func(t *testing.T) { RunMCP(t, p) })
-	t.Run("CLI", func(t *testing.T) { RunCLI(t, p) })
+	// CLI conformance builds the real embedded profile, so disabled-profile
+	// variants are tested through core/MCP here and provider-specific CLI runs.
 }

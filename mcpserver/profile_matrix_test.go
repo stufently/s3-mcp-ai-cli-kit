@@ -28,6 +28,7 @@ func TestProfileRegistrationMatrix(t *testing.T) {
 	requirements["s3_move_object"] = 3
 	requirements["s3_delete_bucket"] = 6
 	groups := []struct{ feature, tools string }{
+		{"bucket_create", "s3_create_bucket"}, {"bucket_delete", "s3_delete_bucket"}, {"bucket_config", "s3_get_bucket_config"},
 		{"versioning", "s3_list_object_versions s3_put_bucket_versioning"},
 		{"object_tagging", "s3_get_object_tagging s3_put_object_tagging"},
 		{"cors", "s3_put_bucket_cors"}, {"bucket_policy", "s3_put_bucket_policy s3_delete_bucket_policy"},
@@ -35,13 +36,15 @@ func TestProfileRegistrationMatrix(t *testing.T) {
 		{"multipart", "s3_list_multipart_uploads s3_list_parts s3_unfinished_uploads s3_multipart_create s3_multipart_presign_part s3_multipart_complete s3_multipart_abort s3_upload_file"},
 		{"presign", "s3_presign_get s3_presign_put s3_multipart_presign_part"}, {"conditional_delete", "s3_move_object"},
 	}
+	base, err := testprofile.Load()
+	if err != nil {
+		t.Fatal(err)
+	}
 	for caps := 0; caps < 1<<len(groups); caps++ {
 		for mask := 0; mask < 8; mask++ {
 			for _, root := range []string{"", "root"} {
-				p, err := testprofile.Load()
-				if err != nil {
-					t.Fatal(err)
-				}
+				p := base
+				p.Features = make(map[string]bool)
 				disabled := map[string]bool{}
 				for bit, group := range groups {
 					enabled := caps&(1<<bit) != 0
