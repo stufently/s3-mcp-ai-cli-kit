@@ -1,0 +1,22 @@
+name: Provider CI
+on:
+  workflow_call:
+    inputs:
+      kit-ref:
+        type: string
+        default: v0.1.0
+permissions:
+  contents: read
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7.0.1
+        with:
+          fetch-depth: 0
+      - uses: actions/checkout@v7.0.1
+        with:
+          repository: stufently/s3-mcp-ai-cli-kit
+          ref: ${{ inputs.kit-ref }}
+          path: .kit
+      - run: S3_KIT_ROOT="$PWD/.kit" bash .kit/scripts/verify.sh
