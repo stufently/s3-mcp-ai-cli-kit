@@ -2,6 +2,8 @@
 
 ## 2026-10-11
 
+- Add Google Search Console ownership metadata to the project directory.
+
 - Add a bilingual directory linking all seven S3 MCP servers and their provider guides.
 - Add a static GitHub Pages site and social preview artwork for the project family.
 

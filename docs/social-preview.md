@@ -4,6 +4,9 @@ Each repository contains editable SVG artwork and a 1280 × 640 PNG in
 `docs/assets/`. The family website uses its PNG through Open Graph and Twitter
 card metadata. Repository link previews are configured separately in GitHub.
 
+All eight repositories have a custom social preview installed. GitHub's
+`usesCustomOpenGraphImage` flag was checked for each repository on 2026-10-11.
+
 GitHub's documented interface is **Settings → General → Social preview → Edit →
 Upload an image**. Upload the PNG for that repository. See
 [GitHub's social preview guide](https://docs.github.com/en/repositories/managing-your-repositorys-settings-and-features/customizing-your-repository/customizing-your-repositorys-social-media-preview).
@@ -19,6 +22,7 @@ Upload an image**. Upload the PNG for that repository. See
 | MWS | [PNG](https://raw.githubusercontent.com/stufently/mws-s3-mcp-ai-cli/main/docs/assets/social-preview.png) | [MWS settings](https://github.com/stufently/mws-s3-mcp-ai-cli/settings) |
 | Beget | [PNG](https://raw.githubusercontent.com/stufently/beget-s3-mcp-ai-cli/main/docs/assets/social-preview.png) | [Beget settings](https://github.com/stufently/beget-s3-mcp-ai-cli/settings) |
 
-Русский: PNG для каждого проекта готов. Его нужно загрузить в настройках своего
-репозитория. Файл в Git сам по себе не меняет Social preview репозитория; для
-загрузки нужна авторизованная браузерная сессия администратора.
+Русский: превью установлены во всех восьми репозиториях и проверены через GitHub
+API 11.10.2026. Для замены изображения загрузите соответствующий PNG в настройках
+репозитория. Файл в Git сам по себе не меняет Social preview; для загрузки нужна
+авторизованная браузерная сессия администратора.
