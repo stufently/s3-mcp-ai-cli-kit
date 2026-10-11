@@ -1,5 +1,10 @@
 # Changelog
 
+## 2026-10-11
+
+- Add a bilingual directory linking all seven S3 MCP servers and their provider guides.
+- Add a static GitHub Pages site and social preview artwork for the project family.
+
 ## 0.1.1
 
 - Disable bucket creation, deletion and configuration tools independently for console-only providers, including direct CLI/core calls before network access.

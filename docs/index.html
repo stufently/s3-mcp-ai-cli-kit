@@ -1,0 +1,347 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>MCP-серверы и CLI для российских S3-хранилищ | stufently</title>
+<meta name="description" content="S3 MCP-серверы, CLI и skills для Selectel, Яндекс, VK Cloud, Cloud.ru, Timeweb, MWS и Beget. Подключение к Claude Code, Cursor и Codex; код на Go, MIT.">
+<link rel="canonical" href="https://stufently.github.io/s3-mcp-ai-cli-kit/">
+<link rel="alternate" hreflang="ru" href="https://stufently.github.io/s3-mcp-ai-cli-kit/">
+<link rel="alternate" hreflang="en" href="https://stufently.github.io/s3-mcp-ai-cli-kit/en/">
+<link rel="alternate" hreflang="x-default" href="https://stufently.github.io/s3-mcp-ai-cli-kit/">
+<meta property="og:type" content="website">
+<meta property="og:title" content="MCP-серверы и CLI для российских S3-хранилищ">
+<meta property="og:description" content="S3 MCP-серверы, CLI и skills для Selectel, Яндекс, VK Cloud, Cloud.ru, Timeweb, MWS и Beget. Подключение к Claude Code, Cursor и Codex; код на Go, MIT.">
+<meta property="og:url" content="https://stufently.github.io/s3-mcp-ai-cli-kit/">
+<meta property="og:site_name" content="S3 MCP &amp; AI CLI">
+<meta property="og:locale" content="ru_RU">
+<meta property="og:locale:alternate" content="en_US">
+<meta property="og:image" content="https://stufently.github.io/s3-mcp-ai-cli-kit/assets/social-preview.png">
+<meta property="og:image:width" content="1280">
+<meta property="og:image:height" content="640">
+<meta property="og:image:alt" content="S3 MCP + CLI + Skills — семь российских облаков">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="MCP-серверы и CLI для российских S3-хранилищ">
+<meta name="twitter:description" content="S3 MCP-серверы, CLI и skills для Selectel, Яндекс, VK Cloud, Cloud.ru, Timeweb, MWS и Beget. Подключение к Claude Code, Cursor и Codex; код на Go, MIT.">
+<meta name="twitter:image" content="https://stufently.github.io/s3-mcp-ai-cli-kit/assets/social-preview.png">
+<link rel="stylesheet" href="assets/site.css">
+<link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "CollectionPage",
+  "name": "MCP-серверы и CLI для российских S3-хранилищ",
+  "description": "S3 MCP-серверы, CLI и skills для Selectel, Яндекс, VK Cloud, Cloud.ru, Timeweb, MWS и Beget. Подключение к Claude Code, Cursor и Codex; код на Go, MIT.",
+  "url": "https://stufently.github.io/s3-mcp-ai-cli-kit/",
+  "inLanguage": "ru",
+  "mainEntity": {
+    "@type": "ItemList",
+    "itemListElement": [
+      {
+        "@type": "ListItem",
+        "position": 1,
+        "item": {
+          "@type": "SoftwareSourceCode",
+          "name": "Selectel S3 MCP Server & AI CLI",
+          "codeRepository": "https://github.com/stufently/selectel-s3-mcp-ai-cli",
+          "url": "https://github.com/stufently/selectel-s3-mcp-ai-cli",
+          "description": "Выбор пула и восстановление резервных копий",
+          "programmingLanguage": "Go",
+          "license": "https://opensource.org/license/mit"
+        }
+      },
+      {
+        "@type": "ListItem",
+        "position": 2,
+        "item": {
+          "@type": "SoftwareSourceCode",
+          "name": "Yandex Cloud S3 MCP Server & AI CLI",
+          "codeRepository": "https://github.com/stufently/yandex-s3-mcp-ai-cli",
+          "url": "https://github.com/stufently/yandex-s3-mcp-ai-cli",
+          "description": "Инвентаризация объектов и проверка версий бэкапов",
+          "programmingLanguage": "Go",
+          "license": "https://opensource.org/license/mit"
+        }
+      },
+      {
+        "@type": "ListItem",
+        "position": 3,
+        "item": {
+          "@type": "SoftwareSourceCode",
+          "name": "VK Cloud S3 MCP Server & AI CLI",
+          "codeRepository": "https://github.com/stufently/vkcloud-s3-mcp-ai-cli",
+          "url": "https://github.com/stufently/vkcloud-s3-mcp-ai-cli",
+          "description": "Проверка Hotbox/Icebox и доступ к нужному региону",
+          "programmingLanguage": "Go",
+          "license": "https://opensource.org/license/mit"
+        }
+      },
+      {
+        "@type": "ListItem",
+        "position": 4,
+        "item": {
+          "@type": "SoftwareSourceCode",
+          "name": "Cloud.ru S3 MCP Server & AI CLI",
+          "codeRepository": "https://github.com/stufently/cloudru-s3-mcp-ai-cli",
+          "url": "https://github.com/stufently/cloudru-s3-mcp-ai-cli",
+          "description": "Диагностика доступа к Evolution Object Storage",
+          "programmingLanguage": "Go",
+          "license": "https://opensource.org/license/mit"
+        }
+      },
+      {
+        "@type": "ListItem",
+        "position": 5,
+        "item": {
+          "@type": "SoftwareSourceCode",
+          "name": "Timeweb Cloud S3 MCP Server & AI CLI",
+          "codeRepository": "https://github.com/stufently/timeweb-s3-mcp-ai-cli",
+          "url": "https://github.com/stufently/timeweb-s3-mcp-ai-cli",
+          "description": "Восстановление архивов и учёт объёма префикса",
+          "programmingLanguage": "Go",
+          "license": "https://opensource.org/license/mit"
+        }
+      },
+      {
+        "@type": "ListItem",
+        "position": 6,
+        "item": {
+          "@type": "SoftwareSourceCode",
+          "name": "MWS S3 MCP Server & AI CLI",
+          "codeRepository": "https://github.com/stufently/mws-s3-mcp-ai-cli",
+          "url": "https://github.com/stufently/mws-s3-mcp-ai-cli",
+          "description": "Проверка HMAC-доступа и короткие ссылки на архивы",
+          "programmingLanguage": "Go",
+          "license": "https://opensource.org/license/mit"
+        }
+      },
+      {
+        "@type": "ListItem",
+        "position": 7,
+        "item": {
+          "@type": "SoftwareSourceCode",
+          "name": "Beget S3 MCP Server & AI CLI",
+          "codeRepository": "https://github.com/stufently/beget-s3-mcp-ai-cli",
+          "url": "https://github.com/stufently/beget-s3-mcp-ai-cli",
+          "description": "Просмотр и восстановление файлов из готового бакета",
+          "programmingLanguage": "Go",
+          "license": "https://opensource.org/license/mit"
+        }
+      }
+    ]
+  }
+}
+</script>
+</head>
+<body>
+<a class="skip" href="#main">К содержимому</a>
+<div class="top">
+<header class="wrap">
+<a class="brand" href="./">S3 <span>/</span> MCP</a>
+<nav aria-label="Основная навигация">
+<a class="optional" href="#providers">Выберите провайдера</a>
+<a class="optional" href="#start">Как начать</a>
+<a href="https://github.com/stufently/s3-mcp-ai-cli-kit">GitHub ↗</a>
+<a class="lang" href="./en/" lang="en">English</a>
+</nav>
+</header>
+</div>
+<main id="main" class="wrap">
+<section class="hero">
+<div class="eyebrow">Open source / Object storage</div>
+<h1>MCP-серверы и CLI<br>для российских S3-хранилищ.</h1>
+<p>MCP-сервер, командная строка и skill в одном Go-бинаре. Семь отдельных профилей облаков, один общий код передачи файлов и контроля доступа.</p>
+<div class="buttons">
+<a class="button primary" href="#providers">Выберите провайдера ↓</a>
+<a class="button" href="#start">Как начать</a>
+</div>
+<div class="facts">
+<span>
+<strong>7 провайдеров</strong>
+</span>
+<span>
+<strong>Go · MIT</strong>
+</span>
+<span>
+<strong>Claude Code · Cursor · Codex</strong>
+</span>
+</div>
+</section>
+<section class="section" id="providers">
+<div class="section-head">
+<h2>Каталог проектов</h2>
+<p>Начните с репозитория своего облака. В каждом — русский и английский README, примеры команд, исследование API и таблица совместимости.</p>
+</div>
+<div class="grid">
+<article class="card" id="selectel">
+<span class="number">01 / SELECTEL</span>
+<h3>
+<a href="https://github.com/stufently/selectel-s3-mcp-ai-cli">Selectel / Селектел</a>
+</h3>
+<p class="focus">Выбор пула и восстановление резервных копий</p>
+<p class="note">Шесть пулов в профиле; теги и lifecycle-инструменты выключены.</p>
+<div class="links">
+<a href="https://github.com/stufently/selectel-s3-mcp-ai-cli">README →</a>
+<a href="https://github.com/stufently/selectel-s3-mcp-ai-cli/blob/main/docs/research/selectel-s3.md">Ресерч</a>
+<a href="https://github.com/stufently/selectel-s3-mcp-ai-cli/blob/main/docs/compat.md">API</a>
+</div>
+</article>
+<article class="card" id="yandex">
+<span class="number">02 / YANDEX</span>
+<h3>
+<a href="https://github.com/stufently/yandex-s3-mcp-ai-cli">Yandex Cloud / Яндекс</a>
+</h3>
+<p class="focus">Инвентаризация объектов и проверка версий бэкапов</p>
+<p class="note">ru-central1; защищённая запись без перезаписи ограничена профилем.</p>
+<div class="links">
+<a href="https://github.com/stufently/yandex-s3-mcp-ai-cli">README →</a>
+<a href="https://github.com/stufently/yandex-s3-mcp-ai-cli/blob/main/docs/research/yandex-s3.md">Ресерч</a>
+<a href="https://github.com/stufently/yandex-s3-mcp-ai-cli/blob/main/docs/compat.md">API</a>
+</div>
+</article>
+<article class="card" id="vkcloud">
+<span class="number">03 / VKCLOUD</span>
+<h3>
+<a href="https://github.com/stufently/vkcloud-s3-mcp-ai-cli">VK Cloud / ВК Облако</a>
+</h3>
+<p class="focus">Проверка Hotbox/Icebox и доступ к нужному региону</p>
+<p class="note">Пулы ru-msk и kz-ast; bucket tagging выключен.</p>
+<div class="links">
+<a href="https://github.com/stufently/vkcloud-s3-mcp-ai-cli">README →</a>
+<a href="https://github.com/stufently/vkcloud-s3-mcp-ai-cli/blob/main/docs/research/vkcloud-s3.md">Ресерч</a>
+<a href="https://github.com/stufently/vkcloud-s3-mcp-ai-cli/blob/main/docs/compat.md">API</a>
+</div>
+</article>
+<article class="card" id="cloudru">
+<span class="number">04 / CLOUDRU</span>
+<h3>
+<a href="https://github.com/stufently/cloudru-s3-mcp-ai-cli">Cloud.ru</a>
+</h3>
+<p class="focus">Диагностика доступа к Evolution Object Storage</p>
+<p class="note">Evolution, s3.cloud.ru, ru-central-1; не профиль Advanced.</p>
+<div class="links">
+<a href="https://github.com/stufently/cloudru-s3-mcp-ai-cli">README →</a>
+<a href="https://github.com/stufently/cloudru-s3-mcp-ai-cli/blob/main/docs/research/cloudru-s3.md">Ресерч</a>
+<a href="https://github.com/stufently/cloudru-s3-mcp-ai-cli/blob/main/docs/compat.md">API</a>
+</div>
+</article>
+<article class="card" id="timeweb">
+<span class="number">05 / TIMEWEB</span>
+<h3>
+<a href="https://github.com/stufently/timeweb-s3-mcp-ai-cli">Timeweb Cloud / Таймвеб</a>
+</h3>
+<p class="focus">Восстановление архивов и учёт объёма префикса</p>
+<p class="note">Тарифы бакета выбираются в панели; PUT Object Lock config выключен.</p>
+<div class="links">
+<a href="https://github.com/stufently/timeweb-s3-mcp-ai-cli">README →</a>
+<a href="https://github.com/stufently/timeweb-s3-mcp-ai-cli/blob/main/docs/research/timeweb-s3.md">Ресерч</a>
+<a href="https://github.com/stufently/timeweb-s3-mcp-ai-cli/blob/main/docs/compat.md">API</a>
+</div>
+</article>
+<article class="card" id="mws">
+<span class="number">06 / MWS</span>
+<h3>
+<a href="https://github.com/stufently/mws-s3-mcp-ai-cli">MWS</a>
+</h3>
+<p class="focus">Проверка HMAC-доступа и короткие ссылки на архивы</p>
+<p class="note">Cloud Platform, storage.mwsapis.ru; ACL выключен.</p>
+<div class="links">
+<a href="https://github.com/stufently/mws-s3-mcp-ai-cli">README →</a>
+<a href="https://github.com/stufently/mws-s3-mcp-ai-cli/blob/main/docs/research/mws-s3.md">Ресерч</a>
+<a href="https://github.com/stufently/mws-s3-mcp-ai-cli/blob/main/docs/compat.md">API</a>
+</div>
+</article>
+<article class="card" id="beget">
+<span class="number">07 / BEGET</span>
+<h3>
+<a href="https://github.com/stufently/beget-s3-mcp-ai-cli">Beget / Бегет</a>
+</h3>
+<p class="focus">Просмотр и восстановление файлов из готового бакета</p>
+<p class="note">Бакеты и ссылки — через панель; presign и bucket API выключены.</p>
+<div class="links">
+<a href="https://github.com/stufently/beget-s3-mcp-ai-cli">README →</a>
+<a href="https://github.com/stufently/beget-s3-mcp-ai-cli/blob/main/docs/research/beget-s3.md">Ресерч</a>
+<a href="https://github.com/stufently/beget-s3-mcp-ai-cli/blob/main/docs/compat.md">API</a>
+</div>
+</article>
+<article class="card kit">
+<span class="number">SHARED / GO MODULE</span>
+<h3>
+<a href="https://github.com/stufently/s3-mcp-ai-cli-kit">Общий Go kit</a>
+</h3>
+<p class="note">MCP, CLI, область доступа, подтверждения, файловый корень, аудит и переиспользуемые проверки.</p>
+<div class="links">
+<a href="https://github.com/stufently/s3-mcp-ai-cli-kit">Исходный код →</a>
+<a href="https://github.com/stufently/s3-mcp-ai-cli-kit/blob/main/README.en.md">English README</a>
+</div>
+</article>
+</div>
+</section>
+<section class="section" id="start">
+<h2>Как начать</h2>
+<div class="steps">
+<div>
+<span class="step">01</span>
+<h3>Соберите бинарь</h3>
+<p>Клонируйте репозиторий провайдера. До первого релиза используйте Docker-сборку из его README.</p>
+</div>
+<div>
+<span class="step">02</span>
+<h3>Настройте доступ</h3>
+<p>Создайте S3-ключ в своём облаке и сохраните его через auth set. Выберите бакет и ограничьте префикс.</p>
+</div>
+<div>
+<span class="step">03</span>
+<h3>Подключите MCP</h3>
+<p>Установите конфигурацию Claude Code, Cursor или Codex. Начните со списка объектов и чтения.</p>
+</div>
+</div>
+<h3>Пример подключения: Яндекс Облако + Codex</h3>
+<pre>
+<code>bash scripts/go.sh go build -o yandex-s3 ./cmd/yandex-s3
+./yandex-s3 auth set
+./yandex-s3 mcp install --client codex</code>
+</pre>
+<p>Команды запускаются из корня клонированного yandex-s3-mcp-ai-cli. Для запросов в облако нужен ваш S3-ключ; ввод auth set скрывает секрет.</p>
+<div class="callout">
+<strong>Статус проекта.</strong> Код и проверки на эмуляторе опубликованы. Живые проверки каждого облака ещё ожидают ключа владельца; релизы бинарей, OCI-образы и публикация в MCP Registry отложены. Профили и их ограничения описаны в репозиториях. <a href="https://github.com/stufently/s3-mcp-ai-cli-kit/blob/main/TASKS.md">TASKS.md →</a>
+</div>
+</section>
+<section class="section faq" id="faq">
+<h2>Вопросы перед подключением</h2>
+<details>
+<summary>Какие S3-провайдеры входят в семейство?</summary>
+<p>Selectel, Яндекс Облако, VK Cloud, Cloud.ru Evolution, Timeweb Cloud, MWS Cloud Platform и Beget. У каждого собственный бинарь, профиль и документация.</p>
+</details>
+<details>
+<summary>Как подключить S3 к Claude Code, Cursor или Codex?</summary>
+<p>Соберите бинарь своего провайдера, сохраните ключ через auth set и выполните mcp install для выбранного клиента. Команды и расположение конфигурации указаны в README каждого проекта.</p>
+</details>
+<details>
+<summary>Может ли AI-агент удалять мои файлы?</summary>
+<p>MCP по умолчанию предоставляет только чтение. Запись, удаление и администрирование включаются отдельно; опасные действия проходят настроенную политику подтверждения. Дополнительно ограничьте права S3-ключа, бакет и префикс.</p>
+</details>
+<details>
+<summary>Это замена aws-cli или rclone?</summary>
+<p>Проекты добавляют MCP-инструменты, skill и контроль доступа для AI-агентов. CLI подходит для операций с объектами и потокового восстановления; aws-cli и rclone остаются отдельными инструментами автоматизации.</p>
+</details>
+<details>
+<summary>Все ли API одинаково доступны во всех облаках?</summary>
+<p>Нет. Инструменты регистрируются по возможностям профиля. Например, у Beget выключены bucket API и внешний presign, а профиль Cloud.ru относится к Evolution. Проверяйте compat и статус живых тестов.</p>
+</details>
+<details>
+<summary>Где посмотреть цены и сроки presigned-ссылок?</summary>
+<p>В исследовании своего провайдера со ссылками на официальные документы. Цены и неподтверждённые значения помечены в репозиториях; каталог не служит тарифным предложением.</p>
+</details>
+</section>
+</main>
+<footer class="footer">
+<div class="wrap">
+<span>Независимый проект; не официальный продукт провайдеров.</span>
+<span>
+<a href="https://github.com/stufently/s3-mcp-ai-cli-kit/blob/main/LICENSE">Лицензия MIT</a> · <a href="https://github.com/stufently">stufently</a>
+</span>
+</div>
+</footer>
+</body>
+</html>

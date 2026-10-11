@@ -1,6 +1,27 @@
 # S3 MCP & AI CLI kit
 
-Shared Go module for provider-specific S3 MCP servers, streaming CLIs and installable agent skills. MIT licensed. Provider repositories embed a YAML profile and call `cli.New(profile, version, commit)`.
+Общий Go-модуль для MCP-серверов, CLI и skills российских S3-хранилищ: Selectel (Селектел), Яндекс Облако, VK Cloud, Cloud.ru Evolution, Timeweb Cloud, MWS Cloud Platform и Beget (Бегет). Провайдеры используют один код MCP, передачи файлов и защит, а различия задают YAML-профилем.
+
+[English guide](README.en.md) · [Каталог S3 MCP-серверов](https://stufently.github.io/s3-mcp-ai-cli-kit/)
+
+## English
+
+A shared Go toolkit for S3 MCP servers, streaming CLIs and agent skills. Seven provider projects connect Claude Code, Cursor and Codex to Russian object storage services with read-only defaults, scoped access and signed human approvals.
+
+## Провайдеры
+
+| Провайдер | Репозиторий | Сценарий |
+|---|---|---|
+| Selectel | [selectel-s3-mcp-ai-cli](https://github.com/stufently/selectel-s3-mcp-ai-cli) | Выбор пула и восстановление резервных копий |
+| Yandex Cloud | [yandex-s3-mcp-ai-cli](https://github.com/stufently/yandex-s3-mcp-ai-cli) | Инвентаризация объектов и проверка версий бэкапов |
+| VK Cloud | [vkcloud-s3-mcp-ai-cli](https://github.com/stufently/vkcloud-s3-mcp-ai-cli) | Проверка Hotbox/Icebox и доступ к нужному региону |
+| Cloud.ru | [cloudru-s3-mcp-ai-cli](https://github.com/stufently/cloudru-s3-mcp-ai-cli) | Диагностика доступа к Evolution Object Storage |
+| Timeweb Cloud | [timeweb-s3-mcp-ai-cli](https://github.com/stufently/timeweb-s3-mcp-ai-cli) | Восстановление архивов и учёт объёма префикса |
+| MWS | [mws-s3-mcp-ai-cli](https://github.com/stufently/mws-s3-mcp-ai-cli) | Проверка HMAC-доступа и короткие ссылки на архивы |
+| Beget | [beget-s3-mcp-ai-cli](https://github.com/stufently/beget-s3-mcp-ai-cli) | Просмотр и восстановление файлов из готового бакета |
+| Shared Go kit | [s3-mcp-ai-cli-kit](https://github.com/stufently/s3-mcp-ai-cli-kit) | Общие MCP, CLI, защиты и CI |
+
+Каждый проект содержит свой README RU/EN, профиль возможностей, ресерч официальной документации и статус живой проверки. Каталог не означает, что все возможности одинаковы или уже проверены на реальном облаке.
 
 ## Packages
 
@@ -31,3 +52,7 @@ Read-only defaults; capability-disabled tools are absent. Destructive actions re
 ## License
 
 [MIT](LICENSE).
+
+## Social preview
+
+[Artwork and GitHub upload instructions](docs/social-preview.md). The family site has its own Open Graph image; repository previews require a separate GitHub Settings upload.

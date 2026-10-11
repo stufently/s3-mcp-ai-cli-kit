@@ -1,0 +1,75 @@
+*{box-sizing:border-box}
+html{scroll-behavior:smooth;scroll-padding-top:90px}
+body{margin:0;background:#f7f6f1;color:#182e26;font:17px/1.65 system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}
+a{color:#176550;text-underline-offset:4px}
+a:hover{text-decoration-thickness:2px}
+a:focus-visible,summary:focus-visible{outline:3px solid #aa6500;outline-offset:5px}
+.skip{position:absolute;top:-60px;left:16px;background:white;padding:12px;z-index:10}
+.skip:focus{top:10px}
+.wrap{max-width:1160px;margin:0 auto;padding:0 32px}
+.top{border-bottom:1px solid #d7dfd6;background:#f7f6f1}
+header{min-height:86px;display:flex;align-items:center;justify-content:space-between;gap:20px}
+.brand{font-weight:750;letter-spacing:-1px;color:#182e26;text-decoration:none;font-size:25px}
+.brand span{color:#176550}
+nav{display:flex;gap:24px;align-items:center;font-size:14px}
+nav a{text-decoration:none}
+.lang{border:1px solid #bdccbf;border-radius:6px;padding:5px 10px}
+.hero{padding:72px 0 56px;max-width:940px}
+.eyebrow{font-size:12px;font-weight:750;letter-spacing:2px;color:#427360;text-transform:uppercase}
+.hero h1{font-size:clamp(38px,5.5vw,66px);line-height:1.09;letter-spacing:-2px;font-weight:720;margin:22px 0 26px;max-width:900px}
+.hero p{font-size:21px;max-width:760px;color:#41564c}
+.buttons{display:flex;gap:14px;flex-wrap:wrap;margin:28px 0}
+.button{display:inline-block;border:1px solid #176550;padding:10px 18px;border-radius:7px;text-decoration:none;font-size:15px;font-weight:650}
+.button.primary{background:#176550;color:#fff}
+.facts{display:flex;gap:32px;flex-wrap:wrap;border-top:1px solid #d7dfd6;padding-top:24px;font-size:14px;color:#52675b}
+.facts strong{color:#182e26}
+.section{padding:48px 0;border-top:1px solid #d7dfd6}
+.section-head{display:flex;justify-content:space-between;align-items:end;gap:32px;margin-bottom:28px}
+.section h2{font-size:32px;letter-spacing:-.7px;margin:0 0 12px;line-height:1.2}
+.section-head p{max-width:560px;margin:0;color:#52675b}
+.grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px}
+.card{background:#fffefa;border:1px solid #d7dfd6;border-radius:10px;padding:26px;display:flex;flex-direction:column;scroll-margin-top:30px}
+.card .number{font:12px ui-monospace,monospace;color:#6a7d71;letter-spacing:1px}
+.card h3{font-size:24px;margin:12px 0 8px;line-height:1.3}
+.card h3 a{color:#182e26;text-decoration:none}
+.card .focus{font-weight:600;line-height:1.45;margin:4px 0 16px}
+.card .note{color:#52675b;font-size:14px;margin:0 0 16px}
+.card .links{display:flex;gap:14px;font-size:14px;margin-top:auto;flex-wrap:wrap}
+.card.kit{background:#e9f0e8;grid-column:span 2}
+.steps{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:32px}
+.steps h3{font-size:19px;line-height:1.3;margin:12px 0}
+.steps p{font-size:15px;color:#52675b}
+.step{font:13px ui-monospace,monospace;color:#176550}
+pre{background:#182e26;color:#f1f5ea;border-radius:8px;padding:24px;overflow:auto;line-height:1.8;font:14px/1.8 ui-monospace,SFMono-Regular,Consolas,monospace;max-width:100%}
+code{font-family:ui-monospace,SFMono-Regular,Consolas,monospace;overflow-wrap:anywhere}
+.callout{padding:22px 26px;background:#edf0e5;border-left:3px solid #7b8b4e;border-radius:0 8px 8px 0;margin-top:24px;font-size:15px}
+.faq{max-width:880px}
+details{border-bottom:1px solid #d7dfd6;padding:18px 0}
+summary{cursor:pointer;font-weight:650;font-size:18px}
+details p{margin-bottom:8px;color:#52675b;font-size:16px}
+.footer{border-top:1px solid #d7dfd6;margin-top:30px;padding:30px 0;color:#52675b;font-size:13px}
+.footer .wrap{display:flex;justify-content:space-between;gap:20px}
+.footer a{color:#52675b}
+@media(max-width:850px){.grid{grid-template-columns:repeat(2,minmax(0,1fr))}
+.card.kit{grid-column:auto}
+.steps{grid-template-columns:1fr;gap:14px}
+.section-head{display:block}
+.section-head p{margin-top:16px}
+}
+@media(max-width:550px){.wrap{padding:0 20px}
+header{min-height:76px;gap:14px}
+nav{gap:14px}
+nav .optional{display:none}
+.brand{font-size:22px}
+.hero{padding:48px 0 38px}
+.hero h1{letter-spacing:-1px}
+.hero p{font-size:18px}
+.grid{grid-template-columns:1fr}
+.section{padding:36px 0}
+.section h2{font-size:28px}
+.facts{gap:18px}
+.footer .wrap{display:block}
+.card{padding:22px}
+}
+@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}
+}
