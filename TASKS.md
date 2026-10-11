@@ -26,6 +26,6 @@
 
 - Google Search Console: каталог подтверждён метатегом, доступ siteOwner; sitemap отправлен. Последняя проверка: Pending, RU/EN пока URL is unknown to Google. Это ожидание обхода, а не подтверждение включения в поиск.
 - Яндекс.Вебмастер: MCP, прямой HTTPS-запрос и браузер возвращают connection timeout к api.webmaster.yandex.net; браузерная сессия Вебмастера отсутствует. Sitemap через этот кабинет не отправлен.
-- IndexNow: подготовлен файл подтверждения только для каталога /s3-mcp-ai-cli-kit/; отправка RU/EN ожидает публикации файла. [Протокол Яндекса](https://yandex.ru/support/webmaster/ru/indexnow/reference).
+- IndexNow: файл подтверждения опубликован и проверен через MCP; область — только /s3-mcp-ai-cli-kit/. Оба URL RU/EN отправлены через MCP IndexNow, HTTP 202 Accepted (проверка нового ключа ожидается). Включение в поиск ещё не подтверждено. [Протокол Яндекса](https://yandex.ru/support/webmaster/ru/indexnow/reference), [обмен URL между участниками](https://www.indexnow.org/documentation).
 - Telegram: восемь ссылок доставлены с включёнными крупными превью. GitHub отдаёт правильные PNG (HTTP 200 и побайтное совпадение); визуальная обрезка внутри Telegram не проверена, поскольку клиент без авторизации.
 - Живые облачные проверки отложены до отдельного прогона. Релизы провайдеров, OCI и MCP Registry по-прежнему ждут их результатов.
