@@ -19,4 +19,13 @@
 - GitHub metadata всех восьми репозиториев проверены: двуязычные описания, 20 релевантных topics, homepage на общий каталог; чужие selectel-s3 topics заменены.
 - GitHub Pages RU/EN опубликован: [каталог](https://stufently.github.io/s3-mcp-ai-cli-kit/) и [English](https://stufently.github.io/s3-mcp-ai-cli-kit/en/). Источник — main:/docs, HTTPS включён; HTTP 200, canonical/hreflang/JSON-LD, sitemap и OG PNG проверены на опубликованном сайте. Chromium — шесть сочетаний языка и viewport.
 - Social preview: установлен во всех восьми репозиториях; `usesCustomOpenGraphImage=true` подтверждён через GitHub API 11.10.2026. SVG и PNG сохранены в `docs/assets/`. [Инструкция и PNG](docs/social-preview.md).
+- Проверено 11.10.2026: установка из свежего публичного clone в Docker с пустыми HOME/Go-кэшем; конфиги Cursor, Claude Desktop, Codex, Claude Code project/user, skill и MCP smoke на всех восьми сочетаниях уровней доступа. В конфиги клиентов ключи не попадают; write/delete/admin по умолчанию выключены.
 - Проверено в Docker: ссылки README и страниц, восемь PNG/SVG; у провайдеров check_docs (заголовки, compat и Registry schema). Доставлено в main 11.10.2026; текущие облачные CI-проверки — в [Actions](https://github.com/stufently/s3-mcp-ai-cli-kit/actions).
+
+## Индексация и проверка ссылок — 11.10.2026
+
+- Google Search Console: каталог подтверждён метатегом, доступ siteOwner; sitemap отправлен. Последняя проверка: Pending, RU/EN пока URL is unknown to Google. Это ожидание обхода, а не подтверждение включения в поиск.
+- Яндекс.Вебмастер: MCP, прямой HTTPS-запрос и браузер возвращают connection timeout к api.webmaster.yandex.net; браузерная сессия Вебмастера отсутствует. Sitemap через этот кабинет не отправлен.
+- IndexNow: подготовлен файл подтверждения только для каталога /s3-mcp-ai-cli-kit/; отправка RU/EN ожидает публикации файла. [Протокол Яндекса](https://yandex.ru/support/webmaster/ru/indexnow/reference).
+- Telegram: восемь ссылок доставлены с включёнными крупными превью. GitHub отдаёт правильные PNG (HTTP 200 и побайтное совпадение); визуальная обрезка внутри Telegram не проверена, поскольку клиент без авторизации.
+- Живые облачные проверки отложены до отдельного прогона. Релизы провайдеров, OCI и MCP Registry по-прежнему ждут их результатов.
