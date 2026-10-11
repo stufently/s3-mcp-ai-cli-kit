@@ -17,6 +17,6 @@
 
 - Завершено: каталог семи провайдеров в README RU/EN; взаимные ссылки и отдельные сценарии провайдеров.
 - GitHub metadata всех восьми репозиториев проверены: двуязычные описания, 20 релевантных topics, homepage на общий каталог; чужие selectel-s3 topics заменены.
-- GitHub Pages RU/EN: источник готов; Chromium — шесть сочетаний языка и viewport, навигация/FAQ и metadata проверены. Публикация выполняется.
+- GitHub Pages RU/EN опубликован: [каталог](https://stufently.github.io/s3-mcp-ai-cli-kit/) и [English](https://stufently.github.io/s3-mcp-ai-cli-kit/en/). Источник — main:/docs, HTTPS включён; HTTP 200, canonical/hreflang/JSON-LD, sitemap и OG PNG проверены на опубликованном сайте. Chromium — шесть сочетаний языка и viewport.
 - Social preview: восемь SVG/PNG готовы; Open Graph сайта настроен. Загрузка превью репозиториев требует авторизованной браузерной сессии администратора. [Инструкция и PNG](docs/social-preview.md).
-- Проверено в Docker: ссылки README и страниц, восемь PNG/SVG; у провайдеров check_docs (заголовки, compat и Registry schema). Доставка в main выполняется.
+- Проверено в Docker: ссылки README и страниц, восемь PNG/SVG; у провайдеров check_docs (заголовки, compat и Registry schema). Доставлено в main 11.10.2026; текущие облачные CI-проверки — в [Actions](https://github.com/stufently/s3-mcp-ai-cli-kit/actions).
