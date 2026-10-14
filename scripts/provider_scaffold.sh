@@ -146,7 +146,8 @@ def with_ignore(rel, line):
         fail("missing %s" % rel)
     with open(path, encoding="utf-8") as handle:
         text = handle.read()
-    if any(token.strip("/") == "dist-mcpb" for token in text.split()):
+    rules = [raw.strip() for raw in text.splitlines()]
+    if any(rule.strip("/") == "dist-mcpb" for rule in rules if not rule.startswith("#")):
         files[rel] = text.encode("utf-8")
     else:
         if text and not text.endswith("\n"):
@@ -168,7 +169,8 @@ def differs(rel):
     if current != files[rel]:
         return True
     file_mode = modes[rel]
-    if file_mode is not None and (os.stat(path).st_mode & 0o777) != file_mode:
+    # Git tracks only the executable bit; the rest of the mode follows umask.
+    if file_mode is not None and not os.stat(path).st_mode & 0o100:
         return True
     return False
 
