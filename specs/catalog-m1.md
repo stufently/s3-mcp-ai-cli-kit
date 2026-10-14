@@ -22,8 +22,8 @@ BASE selectel: `638376907b7cfdf6b7aee5f20db7d2be4f81a8d1` — `Record fresh Dock
 
 | Файл | sha256 |
 |---|---|
-| `docs/specs/catalog-m1.md` | (эта спека) |
-| `docs/specs/checks/catalog_check.py` | `147e0e9e0f8dbced0f1d23bdf36c1cdff4c689144ae6231086d7d010f601fd5b` |
+| `specs/catalog-m1.md` | (эта спека) |
+| `specs/checks/catalog_check.py` | `147e0e9e0f8dbced0f1d23bdf36c1cdff4c689144ae6231086d7d010f601fd5b` |
 
 `catalog_check.py` — пробник приёмки (stdlib, `python3 -I`). Читать его можно и
 нужно: это самое точное описание контракта. Если его требование противоречит
@@ -208,12 +208,12 @@ reusable workflow подпись attestation и OIDC-идентичность п
 - Никаких тегов, релизов, `git push`, `gh release`, публикаций в ghcr/Registry, `docker push`.
 - Бизнес-логику серверов: весь Go-код kit и провайдера, `go.mod/go.sum`, `.goreleaser.yaml`,
   `ci.yml`, `provider-ci.yml`, `profile.yaml`, `testdata/`, README, skills, docs-сайт kit.
-- Живые деревья `~/github/*`; файлы пробника `docs/specs/checks/catalog_check.py` и эту спеку
+- Живые деревья `~/github/*`; файлы пробника `specs/checks/catalog_check.py` и эту спеку
   (только закоммитить).
 - Ожидаемые изменения, РОВНО:
   kit — `templates/provider/**`, `scripts/build-mcpb.sh`, `scripts/mcpb-checksums.sh`,
-  `scripts/provider_scaffold.sh`, `CHANGELOG.md`, `docs/specs/catalog-m1.md`,
-  `docs/specs/checks/catalog_check.py`;
+  `scripts/provider_scaffold.sh`, `CHANGELOG.md`, `specs/catalog-m1.md`,
+  `specs/checks/catalog_check.py`;
   selectel — `glama.json`, `Dockerfile`, `server.json`, `.github/workflows/release.yml`,
   `mcpb/manifest.json`, `scripts/build-mcpb.sh`, `scripts/mcpb-checksums.sh`, `.gitignore`,
   `.dockerignore`, `CHANGELOG.md`.
@@ -253,7 +253,7 @@ Docker под своим uid, сеть для Go-модулей и npm, лока
 Команды запускаются из корня kit-клона.
 
 **AC-001 — В kit изменены только разрешённые пути, спека и пробник закоммичены, дерево чистое.**
-`bash -c 'set -e; B=a86354f1f6b25f113d9d23774d7ee368cba8166e; test "$(git branch --show-current)" = catalog-m1; git diff --check $B HEAD; git diff --quiet $B HEAD -- . ":(exclude)templates/provider" ":(exclude)scripts/build-mcpb.sh" ":(exclude)scripts/mcpb-checksums.sh" ":(exclude)scripts/provider_scaffold.sh" ":(exclude)CHANGELOG.md" ":(exclude)docs/specs/catalog-m1.md" ":(exclude)docs/specs/checks/catalog_check.py"; git ls-files --error-unmatch docs/specs/catalog-m1.md docs/specs/checks/catalog_check.py templates/provider/release.yml templates/provider/Dockerfile templates/provider/glama.json templates/provider/mcpb/manifest.json scripts/provider_scaffold.sh >/dev/null; test -z "$(git status --porcelain -- . ":(exclude)report.json" ":(exclude)report-blocked.md")"'`
+`bash -c 'set -e; B=a86354f1f6b25f113d9d23774d7ee368cba8166e; test "$(git branch --show-current)" = catalog-m1; git diff --check $B HEAD; git diff --quiet $B HEAD -- . ":(exclude)templates/provider" ":(exclude)scripts/build-mcpb.sh" ":(exclude)scripts/mcpb-checksums.sh" ":(exclude)scripts/provider_scaffold.sh" ":(exclude)CHANGELOG.md" ":(exclude)specs/catalog-m1.md" ":(exclude)specs/checks/catalog_check.py"; git ls-files --error-unmatch specs/catalog-m1.md specs/checks/catalog_check.py templates/provider/release.yml templates/provider/Dockerfile templates/provider/glama.json templates/provider/mcpb/manifest.json scripts/provider_scaffold.sh >/dev/null; test -z "$(git status --porcelain -- . ":(exclude)report.json" ":(exclude)report-blocked.md")"'`
 
 **AC-002 — В selectel изменены только разрешённые пути, всё закоммичено в catalog-m1, дерево чистое.**
 `bash -c 'set -e; cd /home/deploy/exec-clones/s3sel-catalog-m1; B=638376907b7cfdf6b7aee5f20db7d2be4f81a8d1; test "$(git branch --show-current)" = catalog-m1; git diff --check $B HEAD; git diff --quiet $B HEAD -- . ":(exclude)glama.json" ":(exclude)Dockerfile" ":(exclude)server.json" ":(exclude).github/workflows/release.yml" ":(exclude)mcpb/manifest.json" ":(exclude)scripts/build-mcpb.sh" ":(exclude)scripts/mcpb-checksums.sh" ":(exclude).gitignore" ":(exclude).dockerignore" ":(exclude)CHANGELOG.md"; git ls-files --error-unmatch glama.json mcpb/manifest.json scripts/build-mcpb.sh scripts/mcpb-checksums.sh >/dev/null; test -z "$(git status --porcelain -- . ":(exclude)report.json" ":(exclude)report-blocked.md")"'`
@@ -265,19 +265,19 @@ Docker под своим uid, сеть для Go-модулей и npm, лока
 `bash -c 'set -e; K=$PWD; cd /home/deploy/exec-clones/s3sel-catalog-m1; bash $K/scripts/provider_scaffold.sh --check; d=$(mktemp -d); git clone -q /home/deploy/exec-clones/s3sel-catalog-m1 $d/a; git -C $d/a checkout -q catalog-m1; echo "# drift" >> $d/a/.github/workflows/release.yml; if (cd $d/a && bash $K/scripts/provider_scaffold.sh --check); then echo "drift in release.yml not caught"; exit 1; fi; git clone -q /home/deploy/exec-clones/s3sel-catalog-m1 $d/b; git -C $d/b checkout -q catalog-m1; jq ".packages[0].version = .version" $d/b/server.json > $d/b/s.tmp; mv $d/b/s.tmp $d/b/server.json; if (cd $d/b && bash $K/scripts/provider_scaffold.sh --check); then echo "server.json drift not caught"; exit 1; fi'`
 
 **AC-005 — Статический пробник: glama, server.json, mcpb/manifest.json, release.yml, Dockerfile пилота.**
-`bash -c 'set -e; echo "147e0e9e0f8dbced0f1d23bdf36c1cdff4c689144ae6231086d7d010f601fd5b  docs/specs/checks/catalog_check.py" | sha256sum -c -; python3 -I docs/specs/checks/catalog_check.py static /home/deploy/exec-clones/s3sel-catalog-m1'`
+`bash -c 'set -e; echo "147e0e9e0f8dbced0f1d23bdf36c1cdff4c689144ae6231086d7d010f601fd5b  specs/checks/catalog_check.py" | sha256sum -c -; python3 -I specs/checks/catalog_check.py static /home/deploy/exec-clones/s3sel-catalog-m1'`
 
 **AC-006 — Рендер не привязан к Selectel: копия beget после рендера проходит пробник, повторный рендер идемпотентен.**
-`bash -c 'set -e; K=$PWD; echo "147e0e9e0f8dbced0f1d23bdf36c1cdff4c689144ae6231086d7d010f601fd5b  docs/specs/checks/catalog_check.py" | sha256sum -c -; d=$(mktemp -d); git clone -q /home/deploy/github/beget-s3-mcp-ai-cli $d/beget; cd $d/beget; bash $K/scripts/provider_scaffold.sh; git add -A; git -c user.name=t -c user.email=t@t commit -qm render; bash $K/scripts/provider_scaffold.sh; test -z "$(git status --porcelain -- . ":(exclude)report.json" ":(exclude)report-blocked.md")"; bash $K/scripts/provider_scaffold.sh --check; python3 -I $K/docs/specs/checks/catalog_check.py static $d/beget; grep -q "beget-s3-mcp-ai-cli" .github/workflows/release.yml; ! grep -rq -i selectel glama.json Dockerfile server.json .github/workflows/release.yml mcpb/manifest.json'`
+`bash -c 'set -e; K=$PWD; echo "147e0e9e0f8dbced0f1d23bdf36c1cdff4c689144ae6231086d7d010f601fd5b  specs/checks/catalog_check.py" | sha256sum -c -; d=$(mktemp -d); git clone -q /home/deploy/github/beget-s3-mcp-ai-cli $d/beget; cd $d/beget; bash $K/scripts/provider_scaffold.sh; git add -A; git -c user.name=t -c user.email=t@t commit -qm render; bash $K/scripts/provider_scaffold.sh; test -z "$(git status --porcelain -- . ":(exclude)report.json" ":(exclude)report-blocked.md")"; bash $K/scripts/provider_scaffold.sh --check; python3 -I $K/specs/checks/catalog_check.py static $d/beget; grep -q "beget-s3-mcp-ai-cli" .github/workflows/release.yml; ! grep -rq -i selectel glama.json Dockerfile server.json .github/workflows/release.yml mcpb/manifest.json'`
 
 **AC-007 — Полный сьют селектела зелёный (go test/vet, lint, conformance, smoke, мутации, goreleaser snapshot, actionlint) и goreleaser check.**
 `bash -c 'set -e; cd /home/deploy/exec-clones/s3sel-catalog-m1; bash scripts/verify.sh; docker run --rm -u "$(id -u):$(id -g)" -e HOME=/tmp -v "$PWD:/src:ro" -w /src goreleaser/goreleaser:v2.18.3 check'`
 
 **AC-008 — Сборка .mcpb snapshot: 6 бандлов, манифесты, инструменты = all.golden, checksums дописаны с сохранением чужих строк.**
-`bash -c 'set -e; K=$PWD; echo "147e0e9e0f8dbced0f1d23bdf36c1cdff4c689144ae6231086d7d010f601fd5b  docs/specs/checks/catalog_check.py" | sha256sum -c -; cd /home/deploy/exec-clones/s3sel-catalog-m1; VERSION=0.0.0-snapshot bash scripts/build-mcpb.sh; line="$(printf "%064d" 0)  selectel-s3_0.0.0-snapshot_linux_amd64.tar.gz"; printf "%s\n" "$line" > dist-mcpb/checksums.txt; bash scripts/mcpb-checksums.sh dist-mcpb dist-mcpb/checksums.txt; head -1 dist-mcpb/checksums.txt | grep -qxF "$line"; python3 -I $K/docs/specs/checks/catalog_check.py mcpb . dist-mcpb 0.0.0-snapshot dist-mcpb/checksums.txt'`
+`bash -c 'set -e; K=$PWD; echo "147e0e9e0f8dbced0f1d23bdf36c1cdff4c689144ae6231086d7d010f601fd5b  specs/checks/catalog_check.py" | sha256sum -c -; cd /home/deploy/exec-clones/s3sel-catalog-m1; VERSION=0.0.0-snapshot bash scripts/build-mcpb.sh; line="$(printf "%064d" 0)  selectel-s3_0.0.0-snapshot_linux_amd64.tar.gz"; printf "%s\n" "$line" > dist-mcpb/checksums.txt; bash scripts/mcpb-checksums.sh dist-mcpb dist-mcpb/checksums.txt; head -1 dist-mcpb/checksums.txt | grep -qxF "$line"; python3 -I $K/specs/checks/catalog_check.py mcpb . dist-mcpb 0.0.0-snapshot dist-mcpb/checksums.txt'`
 
 **AC-009 — Образ пилота: LABEL = name из server.json, initialize и tools/list без ключей и без сети.**
-`bash -c 'set -e; echo "147e0e9e0f8dbced0f1d23bdf36c1cdff4c689144ae6231086d7d010f601fd5b  docs/specs/checks/catalog_check.py" | sha256sum -c -; docker build -q -t s3sel-catalog-m1:acc /home/deploy/exec-clones/s3sel-catalog-m1 >/dev/null; python3 -I docs/specs/checks/catalog_check.py image /home/deploy/exec-clones/s3sel-catalog-m1 s3sel-catalog-m1:acc'`
+`bash -c 'set -e; echo "147e0e9e0f8dbced0f1d23bdf36c1cdff4c689144ae6231086d7d010f601fd5b  specs/checks/catalog_check.py" | sha256sum -c -; docker build -q -t s3sel-catalog-m1:acc /home/deploy/exec-clones/s3sel-catalog-m1 >/dev/null; python3 -I specs/checks/catalog_check.py image /home/deploy/exec-clones/s3sel-catalog-m1 s3sel-catalog-m1:acc'`
 
 **AC-010 — Сборщик .mcpb отказывает без VERSION и на необязательном поле без default.**
 `bash -c 'set -e; d=$(mktemp -d); git clone -q /home/deploy/exec-clones/s3sel-catalog-m1 $d/s; cd $d/s; git checkout -q catalog-m1; if bash scripts/build-mcpb.sh > $d/out1 2>&1; then echo "no VERSION accepted"; exit 1; fi; grep -q "VERSION" $d/out1; jq "del(.user_config.endpoint.default)" mcpb/manifest.json > m.tmp; mv m.tmp mcpb/manifest.json; if VERSION=0.0.1 bash scripts/build-mcpb.sh > $d/out2 2>&1; then echo "missing default accepted"; exit 1; fi; grep -q "endpoint" $d/out2; test ! -e dist-mcpb/selectel-s3_0.0.1_linux_amd64.mcpb'`
