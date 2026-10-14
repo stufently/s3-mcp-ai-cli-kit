@@ -48,6 +48,10 @@
   10 инструментов без ключей/ALLOW и 18 с `ALLOW=write,delete,admin` (у Selectel 13 и 31).
   Поэтому golden-списки снимаются с образа самого провайдера — это снимок поведения, а не
   независимый оракул; сверку с `features` профиля делает постановщик при приёмке.
+  Постановщик вычислил ожидание из реестра инструментов kit v0.1.0 (его используют все три,
+  `go.mod`) и `features` профилей: у cloudru, vkcloud, yandex — по 14 (read) и 32 (all). Тот
+  же расчёт совпал со снятыми golden у beget, mws, timeweb и selectel. Образ дал другие
+  числа — не подгоняй, стоп по контракту с обоими списками в `report-blocked.md`.
 - `binary` у всех — `<id>-s3`; `profile.yaml` и `server.json` в ASCII-наборе рендерера.
 - `scripts/verify.sh` провайдера = `bash scripts/kit.sh verify` (kit по тегу из `ci.yml`,
   сеть нужна); для пилота этот сьют после рендера зелёный (критерий вехи 1).
@@ -79,8 +83,14 @@
    (`<ENV_PREFIX>` — `env_prefix` из `internal/provider/profile.yaml`, например `BEGET_S3_`;
    `sleep` держит stdin открытым, иначе сервер выходит до ответа.) Файлы — по имени на
    строку, C-сортировка, без дублей; пустой результат — стоп по контракту.
-3. Добавить ОДНУ строку первой в раздел `## Unreleased` `CHANGELOG.md`:
-   `- Add catalog metadata, Desktop Extension bundles and Registry release jobs.`
+3. Добавить ОДНУ строку первым пунктом раздела `## Unreleased` `CHANGELOG.md` — ПОСЛЕ
+   пустой строки под заголовком, вплотную к прежним пунктам (как у пилота Selectel):
+   ```
+   ## Unreleased
+
+   - Add catalog metadata, Desktop Extension bundles and Registry release jobs.
+   - Add provider-specific Russian/English discovery text, …
+   ```
 4. Закоммитить (≤50 символов, imperative, без подписей и Co-Authored-By), например
    `Add catalog metadata and release jobs`.
 
