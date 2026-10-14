@@ -77,9 +77,26 @@ require_render() {
   fi
 }
 
+tree_state() {
+  ( cd "$1" && find . -path ./.git -prune -o -type f -printf '%m %p\n' | LC_ALL=C sort &&
+    find . -path ./.git -prune -o -type f -exec sha256sum {} + | LC_ALL=C sort -k2 )
+}
+
+# --check must only report: the tree (contents and modes) stays as it was.
+capture_check() {
+  local dir=$1 before after
+  before=$(tree_state "$dir") || { printf 'tree snapshot failed\n'; return 1; }
+  capture "$dir" bash "$scaffold" --check
+  after=$(tree_state "$dir") || { printf 'tree snapshot failed\n'; return 1; }
+  if [[ $before != "$after" ]]; then
+    printf -- '--check changed files or modes\n'
+    return 1
+  fi
+}
+
 require_check_exact() {
   local dir=$1 want=$2 got
-  capture "$dir" bash "$scaffold" --check
+  capture_check "$dir" || return 1
   if [[ $cap_rc -eq 0 ]]; then
     printf 'check succeeded, want drift in %s\n' "$want"
     return 1
@@ -163,7 +180,7 @@ case_render_clean() {
   local dir
   dir=$(new_repo) || { printf 'fixture copy failed\n'; return 1; }
   require_render "$dir" "$scaffold" || return 1
-  capture "$dir" bash "$scaffold" --check
+  capture_check "$dir" || return 1
   if [[ $cap_rc -ne 0 ]]; then
     printf 'check rc %s: %s\n' "$cap_rc" "$(cat "$cap_out" "$cap_err")"
     return 1
@@ -209,7 +226,7 @@ case_check_mode_0775() {
   dir=$(new_repo) || { printf 'fixture copy failed\n'; return 1; }
   require_render "$dir" "$scaffold" || return 1
   chmod 0775 "$dir/scripts/build-mcpb.sh" "$dir/scripts/mcpb-checksums.sh"
-  capture "$dir" bash "$scaffold" --check
+  capture_check "$dir" || return 1
   if [[ $cap_rc -ne 0 ]]; then
     printf 'check rc %s: %s\n' "$cap_rc" "$(cat "$cap_out" "$cap_err")"
     return 1
@@ -267,12 +284,17 @@ case_reject_placeholder() {
 }
 
 case_commented_ignore() {
-  local dir
+  local dir src
   dir=$(new_repo) || { printf 'fixture copy failed\n'; return 1; }
   printf '%s\n' '# dist-mcpb' > "$dir/.gitignore"
   require_render "$dir" "$scaffold" || return 1
-  if ! ( cd "$dir" && git check-ignore -q dist-mcpb/probe ); then
+  # A global excludes file must not stand in for the rendered .gitignore rule.
+  if ! src=$(cd "$dir" && git -c core.excludesFile=/dev/null check-ignore -v dist-mcpb/probe); then
     printf 'dist-mcpb/probe is not ignored\n'
+    return 1
+  fi
+  if [[ $src != .gitignore:* ]]; then
+    printf 'dist-mcpb/probe ignored by %s, not .gitignore\n' "$src"
     return 1
   fi
 }
