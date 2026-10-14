@@ -1,5 +1,9 @@
 # Changelog
 
+## 2026-10-14
+
+- Add provider catalog templates for Glama metadata, Desktop Extension bundles, image labels and MCP Registry publishing.
+
 ## 2026-10-11
 
 - Add directory ownership verification for Google Search Console and IndexNow.
