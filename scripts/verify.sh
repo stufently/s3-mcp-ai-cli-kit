@@ -7,6 +7,7 @@ bash "$kit/scripts/conformance.sh"
 bash "$kit/scripts/mcp_smoke.sh"
 bash "$kit/scripts/mutation_gate.sh"
 bash "$kit/scripts/go.sh" go test -count=1 /kit/scripts/mutation_gate.go /kit/scripts/mutation_gate_test.go
+bash "$kit/scripts/catalog_selftest.sh"
 if [[ -f internal/provider/profile.yaml ]]; then
   bash "$kit/scripts/check_docs.sh"
   docker run --rm -u "$(id -u):$(id -g)" -e HOME=/tmp -e GOCACHE=/cache/build -e GOMODCACHE=/cache/mod -v "$HOME/.cache/sel-s3-go:/cache" -v "$PWD:/src" -w /src goreleaser/goreleaser:v2.18.3 release --snapshot --clean

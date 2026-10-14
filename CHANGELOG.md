@@ -3,6 +3,7 @@
 ## 2026-10-14
 
 - Add provider catalog templates for Glama metadata, Desktop Extension bundles, image labels and MCP Registry publishing.
+- Add a catalog self-test that guards scaffold rendering, bundle prechecks and static acceptance checks.
 
 ## 2026-10-11
 
