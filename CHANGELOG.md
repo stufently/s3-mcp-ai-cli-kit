@@ -1,5 +1,9 @@
 # Changelog
 
+## 2026-10-15
+
+- Extend the catalog self-test to catch the five mutants left by the milestone 2c acceptance run: one-sided tag/identifier mismatch, prerelease filter of the registry job, unsafe env_prefix, sha256sum -c before replacing checksums.txt, non-root USER in the image.
+
 ## 2026-10-14
 
 - Add provider catalog templates for Glama metadata, Desktop Extension bundles, image labels and MCP Registry publishing.
