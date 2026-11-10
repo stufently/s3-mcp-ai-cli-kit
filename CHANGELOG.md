@@ -2,7 +2,7 @@
 
 ## 2026-11-10
 
-- Rewrite all 35 MCP tool descriptions for agents: purpose, when to use which sibling tool, return fields, approval and overwrite side effects. Every input parameter now carries a schema description with units, limits and examples. Tool names, schemas and behaviour are unchanged.
+- Rewrite all 35 MCP tool descriptions for agents: purpose, when to use which sibling tool, return fields, approval and overwrite side effects. Every input parameter now carries a schema description with units, limits and examples. Tool names, parameter types, required fields and behaviour are unchanged.
 
 ## 2026-10-15
 

@@ -2,7 +2,7 @@ package mcpserver
 
 // Parameter descriptions published in each tool's input schema. A
 // "tool:field" entry overrides the shared "field" entry for that tool.
-var paramDescriptions = map[string]string{
+var paramDescriptions = map[string]string{ //nolint:gosec // G101: parameter help text, not credentials.
 	"bucket":             `Bucket name, e.g. "backups". Must be inside the configured bucket scope.`,
 	"key":                `Full object key inside the bucket, without the bucket name, e.g. "daily/archive.tar".`,
 	"prefix":             `Key prefix that limits the results, e.g. "daily/"; omit for the whole bucket. End it with "/" to match one folder only. In a prefix-restricted scope it must start with an allowed prefix followed by "/".`,
@@ -16,7 +16,7 @@ var paramDescriptions = map[string]string{
 	"data":               `Object body as UTF-8 text, or base64 when encoding is "base64", e.g. "{\"ok\":true}".`,
 	"content_type":       `MIME type stored with the object, e.g. "application/json"; omit to let the provider choose.`,
 	"expires_seconds":    "URL lifetime in seconds, from 1 up to the provider maximum (presign_max_seconds); default 3600 (one hour).",
-	"overwrite":          "true replaces an existing destination and requires destructive approval; default false refuses an existing destination.",
+	"overwrite":          "true replaces an existing destination and requires destructive approval; default false refuses an existing destination, and on providers without conditional writes refuses the write altogether.",
 	"confirm":            "Set true only after a human has explicitly approved this exact destructive action. Used when the client cannot show an approval form; ignored under the allow policy and never bypasses the block or elicit policy.",
 	"source_bucket":      `Bucket of the source object, e.g. "backups"; may equal bucket.`,
 	"source_key":         `Key of the source object, e.g. "daily/archive.tar"; source and destination must differ.`,
@@ -42,7 +42,7 @@ var paramDescriptions = map[string]string{
 	"s3_move_object:bucket":                        `Destination bucket name, e.g. "backups".`,
 	"s3_move_object:key":                           `Destination object key, e.g. "archive/2026/archive.tar".`,
 	"s3_create_folder:key":                         `Folder key, e.g. "reports/2026"; a trailing "/" is added when missing.`,
-	"s3_delete_object:version_id":                  "Version to delete permanently; omit to delete the current object (on a versioned bucket this only adds a delete marker).",
+	"s3_delete_object:version_id":                  "Version to delete permanently; omit to delete the current object (only a bucket with versioning Enabled then keeps it recoverable behind a delete marker).",
 	"s3_put_object_tagging:version_id":             "Version whose tags are replaced; omit for the current version.",
 	"s3_multipart_create:key":                      `Object key the finished upload will create, e.g. "backups/disk.img".`,
 	"s3_list_parts:continuation_token":             "Part-number marker: the continuation_token from the previous page; omit for the first page.",
