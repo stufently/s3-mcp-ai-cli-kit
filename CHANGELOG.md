@@ -1,5 +1,9 @@
 # Changelog
 
+## 2026-11-10
+
+- Rewrite all 35 MCP tool descriptions for agents: purpose, when to use which sibling tool, return fields, approval and overwrite side effects. Every input parameter now carries a schema description with units, limits and examples. Tool names, schemas and behaviour are unchanged.
+
 ## 2026-10-15
 
 - Extend the catalog self-test to catch the five mutants left by the milestone 2c acceptance run: one-sided tag/identifier mismatch, prerelease filter of the registry job, unsafe env_prefix, sha256sum -c before replacing checksums.txt, non-root USER in the image.
